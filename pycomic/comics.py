@@ -1,11 +1,18 @@
-"""Comics module with all comic communications inside"""
+#!/usr/bin/python
+# comics.py
+
+"""
+Comics talks to the websites of the given comics and interacts
+to retrieve information on comics, and the specific web addresses
+"""
+
 import urllib2
 
 ##
 # Rework of websites.py
 
 # Folders and global variables
-FOLDER = "./var/"
+FOLDER = "./data/"
 PREV, CURR, NEXT = 0, 1, 2
 NUM, NAME = 0, 1
 NULLCOMIC = [-1, ""]
@@ -30,7 +37,7 @@ class Xkcd(object):
 
     def _read_file(self):
         """Do a simple update on the history"""
-        _txt_file = self._folder + "xkcd.txt"
+        _txt_file = self._folder + "xkcd.dat"
         self._history = []
 
         with open(_txt_file, "r") as _txt_file:
@@ -49,7 +56,7 @@ class Xkcd(object):
 
     def _write_file(self):
         """Do a write to the file based on class's history"""
-        _txt_file = self._folder + "xkcd.txt"
+        _txt_file = self._folder + "xkcd.dat"
 
         with open(_txt_file, "w") as _txt_file:
             for line in self._history:
@@ -101,9 +108,10 @@ class Xkcd(object):
         """Return the current comic on the url"""
         def _url_match(pattern, search):
             """Return the final part of the URL based on the pattern"""
-            try: for part in search.split('/'):
-                if not part in pattern:
-                    return part
+            try:
+                for part in search.split('/'):
+                    if not part in pattern:
+                        return part
             except AttributeError:
                 return None
 
